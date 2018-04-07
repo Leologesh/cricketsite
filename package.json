@@ -1,0 +1,11 @@
+{
+  "name": "cricket_html_template_master",
+  "version": "1.0.0",
+  "description": "Mycheck",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "check"
+  },
+  "author": "leo",
+  "license": "ISC"
+}

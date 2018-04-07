@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>ScoreBoard</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/leo.css">
+
+    <link rel="stylesheet" href="css/lavenderTheme.css"/> 
+  <link rel="stylesheet"    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+   <body style="background-color:#f4f3f2">
+    <div class="rca-container">
+
+      <!--Logo Holder-->
+<nav class="navbar navbar-default nav_bar" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Leo Scores</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+         <li><a href="#"><span class="glyphicon glyphicon glyphicon-home"></span> Live scores</a></li>
+          <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"  data-close-others="false">
+          <span class="glyphicon glyphicon glyphicon-user"></span> 
+          Schedule
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#"><span class="glyphicon glyphicon glyphicon-chevron-right"></span>International </a></li>
+            <li><a href="#"><span class="glyphicon glyphicon glyphicon-chevron-right"></span>Domestics</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon glyphicon-chevron-right"></span> Portfolio</a></li>
+          </ul>
+        </li>
+         <li class="dropdown Series">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"  data-close-others="false">
+          <span class="glyphicon glyphicon glyphicon-user"></span> 
+          Series
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu series_name1" role="menu">
+            
+          </ul>
+        </li>
+        <li><a href="#"> <span class="glyphicon glyphicon glyphicon-pencil"></span> Testimonial</a></li>
+      </ul>
+     
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon glyphicon-paperclip"></span> Broucher</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="false">
+          <span class="glyphicon glyphicon glyphicon-earphone"></span> 
+          Contact 
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#"><span class="glyphicon glyphicon glyphicon-screenshot"></span> Sitemap</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon glyphicon-user"></span> Career</a></li>
+            
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+  <div class="rca-row">
+    <div class="rca-column-8">
+
+      <div class="rca-medium-widget rca-padding rca-live-season rca-top-border">
+        <h3>Series details</h3>
+
+      </div>  
+       
+
+
+    </div>
+
+     <div class="rca-column-4">
+   
+      <div class="rca-news-widget check_score rca-padding">
+           <h3>Latest News</h3>
+      </div>
+     </div> 
+
+
+  </div>  
+  
+
+      
+     <div class="rca-row">
+        <div class="rca-column-8">
+          <ul class="rca-footer">
+            <li><a href="">About Us</a></li>
+            <li><a href="">Privacy Policy</a></li>
+            <li><a href="">Feedback</a></li>
+            <li><a href="">Site map</a></li>
+          </ul>
+        </div>
+        <div class="rca-column-4">
+          <ul class="rca-footer rca-right">
+            <li>© 2016 <a href="">Yoursite.com</a>, All rights reserved </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+   <script>
+      function showTab(event) {
+        var sourceParent = event.parentElement.parentElement;
+        var sourceChilds = sourceParent.getElementsByClassName("rca-tab-content");
+        var sourceLinkParent = sourceParent.getElementsByClassName("rca-tab-link");
+        for (var i=0; i < sourceChilds.length; i++) {
+          sourceChilds.item(i).classList.remove("active");
+        }
+        for (var i=0; i < sourceLinkParent.length; i++) {
+          sourceLinkParent.item(i).classList.remove("active");
+        }
+        var dataTab= event.getAttribute("data-tab");
+
+        event.classList.add("active");
+        // document.getElementById(dataTab).className = tabClass + ' active';
+        document.getElementById(dataTab).className += ' active';
+      }
+
+    </script>
+
+  </body>
+</html> 

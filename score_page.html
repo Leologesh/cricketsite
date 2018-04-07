@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>ScoreBoard</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" type="text/css" href="css/leo.css">
+
+    <link rel="stylesheet" href="css/lavenderTheme.css"/>
+  <link rel="stylesheet"    href="css/bootstrap.css">
+
+<!-- jQuery library -->
+<script src="javascript/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="javascript/bootstrap.js"></script>
+<script type="text/javascript" src="javascript/main.js"></script>
+<style type="text/css">
+  .points_table thead {
+  width: 100%;
+}
+
+.points_table tbody {
+  height: 100%;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.points_table thead tr{
+  width: 99%;
+}
+
+ .points_table tr{
+  width: 100%;
+ }
+
+.points_table thead, .points_table tbody, .points_table tr, .points_table td, .points_table th{
+  display: inline-block;
+}
+
+.points_table thead{
+  background: #d91f2d;
+  color: #fff;
+}
+
+.points_table tbody td, .points_table thead > tr> th{
+  float: left;
+  border-bottom-width: 0;
+}
+.current_batting_team{
+    font-weight: 700;
+    font-size: 21px;
+}
+.points_table>tbody>tr>td, .points_table>tbody>tr>th, .points_table>tfoot>tr>td, .points_table>tfoot>tr>th, .points_table>thead>tr>td, .points_table>thead>tr>th{
+  padding: 8px;
+  height: 50px;
+  text-align: center;
+  line-height: 32px;
+}
+
+.odd {
+  background: #ffffff;
+  color: #000;
+}
+
+.even {
+  background: #efefef;
+  color: #000;
+}
+
+.points_table_scrollbar{
+  height: 612px;
+  overflow-y: scroll;
+}
+
+.points_table_scrollbar::-webkit-scrollbar-track{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.9);
+  border-radius: 10px;
+  background-color: #444444;
+}
+
+.points_table_scrollbar::-webkit-scrollbar{
+  width: 1%;
+  min-width: 5px;
+  background-color: #F5F5F5;
+}
+
+.points_table_scrollbar::-webkit-scrollbar-thumb{
+  border-radius: 10px;
+  background-color: #D62929;
+  background-image: -webkit-linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.4) 50%, transparent, transparent)
+}
+.with-nav-tabs.panel-success .nav-tabs > li > a,
+.with-nav-tabs.panel-success .nav-tabs > li > a:hover,
+.with-nav-tabs.panel-success .nav-tabs > li > a:focus {
+	color: #3c763d;
+}
+.with-nav-tabs.panel-success .nav-tabs > .open > a,
+.with-nav-tabs.panel-success .nav-tabs > .open > a:hover,
+.with-nav-tabs.panel-success .nav-tabs > .open > a:focus,
+.with-nav-tabs.panel-success .nav-tabs > li > a:hover,
+.with-nav-tabs.panel-success .nav-tabs > li > a:focus {
+	color: #3c763d;
+	background-color: #d6e9c6;
+	border-color: transparent;
+}
+.with-nav-tabs.panel-success .nav-tabs > li.active > a,
+.with-nav-tabs.panel-success .nav-tabs > li.active > a:hover,
+.with-nav-tabs.panel-success .nav-tabs > li.active > a:focus {
+	color: #3c763d;
+	background-color: #fff;
+	border-color: #d6e9c6;
+	border-bottom-color: transparent;
+}
+.with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+.with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu > li > a {
+    color: #3c763d;
+}
+.with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu > li > a:hover,
+.with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu > li > a:focus {
+    background-color: #d6e9c6;
+}
+.with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu > .active > a,
+.with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu > .active > a:hover,
+.with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu > .active > a:focus {
+    color: #fff;
+    background-color: #3c763d;
+}
+@media (min-width: 992px){
+.main_container {
+    width: 100% !important;
+}
+}
+</style>
+<script type="text/javascript">
+$(document).ready(function() {
+
+
+window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));
+
+$.get("https://newsapi.org/v2/everything?sources=espn-cric-info&apiKey=659d7fdaf1ea45e2b334163f5d901e48"
+
+, function(playerStats) {
+
+  console.log(playerStats);
+   var a='';
+   var b='';
+   var c='';
+   var d='';
+   var e='';
+   var aaa=0;
+
+   for (var i = 0; i < playerStats.articles.length; i++) {
+
+      a=playerStats.articles[i].urlToImage;
+      b=playerStats.articles[i].description;
+      c=playerStats.articles[i].title;
+      d=playerStats.articles[i].publishedAt;
+
+
+     var main_content=" <div class='rca-medium-widget rca-blog-content'><div class='rca-blog-image'><a href='#'><img  src='"+a+"'/></a><div class='rca-blog-head'> '"+c+"'</div></div><div class='rca-padding'>'"+b+"' </div></div>";
+
+
+     $('.main_content').append(main_content);
+
+  }
+  for (var j=playerStats.articles.length-1; j<= playerStats.articles.length; j--) {
+
+    if(aaa<3){
+    a=playerStats.articles[j].urlToImage;
+    // console.log(a);
+    b=playerStats.articles[j].description;
+    // console.log(b);
+    c=playerStats.articles[j].title;
+    d=playerStats.articles[j].publishedAt;
+    var side_content=" <div class='rca-post'><h4><a>'"+c+"'</a></h4><p> '"+b+"' </p> <p class='rca-post-info'>Published At:'"+d+"' </p></div>";
+
+    $('.check_score').append(side_content);
+
+         aaa++;
+
+    }else{
+      return true;
+    }
+  }
+
+});
+
+
+
+var apiKey = "o48jTP9vaQmsh1EFfINtWHzlJms3p1ldPynjsnfWRe4RVVF3BH";
+  var settings = {
+   "async": true,
+    "crossDomain": true,
+    "dataType": "json",
+   "url": "https://dev132-cricket-live-scores-v1.p.mashape.com/series.php",
+      "method": "GET",
+    "headers": {
+       "X-Mashape-Key" : apiKey,
+        "Accept" : "application/json"
+       }
+  }
+    $.ajax(settings).done(function (response) {
+
+         console.log(response);
+         var series_name='';
+         var series_top='';
+         var series_id='';
+         var check=0;
+
+         var series_length=response.seriesList.series.length;
+
+         for (var i = 0; i < series_length; i++) {
+          if((response.seriesList.series[i].status=='INPROGRESS' ) || (response.seriesList.series[i].status=='UPCOMING' )){
+
+          if(series_top<3){
+              series_id=response.seriesList.series[i].id;
+              // console.log(series_id);
+              series_name=response.seriesList.series[i].name;
+
+              var series_name1=" <li data-id="+series_id+"><a ><span class='glyphicon glyphicon glyphicon-chevron-right'></span>"+series_name+"</a></li>";
+              // console.log(series_name);
+             $('.series_name1').append(series_name1);
+
+          }
+            series_top++;
+
+
+          if(check<6){
+            series_id=response.seriesList.series[i].id;
+            series_name=response.seriesList.series[i].name;
+            var series_name1=" <li class='check' data-id="+series_id+"><a  class='name_series'>"+series_name+"</a></li>";
+            // console.log(series_name1);
+             $('.series_name').append(series_name1);
+          }
+
+            check++;
+
+          }
+
+         }
+
+
+  });
+      var url = window.location.href;
+    var match_id1=url.split('=');
+
+    var match_id2=match_id1[1].split('&');
+    var match_id=match_id2[0];
+    console.log(match_id);
+    var series_id=match_id1[2];
+    console.log(series_id);
+  var apiKey = "o48jTP9vaQmsh1EFfINtWHzlJms3p1ldPynjsnfWRe4RVVF3BH";
+
+  var settings = {
+  "async": true,
+  "crossDomain": true,
+  "dataType": "json",
+  "url": "https://dev132-cricket-live-scores-v1.p.mashape.com/match.php?matchid="+match_id+"&seriesid="+series_id+"",
+    "method": "GET",
+  "headers": {
+     "X-Mashape-Key" : apiKey,
+      "Accept" : "application/json"
+     }
+  }
+  $.ajax(settings).done(function (response) {
+                console.log(response);
+                 var match_name= response.match.name;
+                 var series_name=response .match.series.name;
+                 var match_type =response .match.cmsMatchType;
+                 var cmsMatchStartDate =response .match.cmsMatchStartDate;
+                 var venue =response .match.venue.name;
+                 var match_type=response.match.cmsMatchAssociatedType;
+                 var matchSummaryText=response.match.matchSummaryText;
+                 $('.match_name').append(match_name);
+                 $('.series_name_scoreborad').html(series_name);
+                 $('.venue').html(venue);
+                 $('.localtime').html(cmsMatchStartDate);
+                 $('.summar_text').html(matchSummaryText)
+
+
+       });
+
+     var apiKey = "o48jTP9vaQmsh1EFfINtWHzlJms3p1ldPynjsnfWRe4RVVF3BH";
+
+  var settings = {
+  "async": true,
+  "crossDomain": true,
+  "dataType": "json",
+  "url": "https://dev132-cricket-live-scores-v1.p.mashape.com/scorecards.php?matchid="+match_id+"&seriesid="+series_id+"",
+
+    "method": "GET",
+  "headers": {
+     "X-Mashape-Key" : apiKey,
+      "Accept" : "application/json"
+     }
+  }
+  $.ajax(settings).done(function (response) {
+                console.log(response);
+                var innings_length=response.fullScorecard.innings.length;
+                var batsmen_length=response.fullScorecard.innings[0].batsmen.length;
+                  console.log(batsmen_length);
+                  for (var j = 0; j < batsmen_length; j++) {
+                    if(response.fullScorecard.innings[0].batsmen[j].howOut=="not out"){
+                     var not_out_batsmen_name=(response.fullScorecard.innings[0].batsmen[j].name);
+                     var not_out_batsmen_runs=(response.fullScorecard.innings[0].batsmen[j].runs);
+                     var not_out_batsmen_balls=(response.fullScorecard.innings[0].batsmen[j].balls);
+                     var not_out_batsmen_sixes=(response.fullScorecard.innings[0].batsmen[j].sixes);
+                     var not_out_batsmen_fours=(response.fullScorecard.innings[0].batsmen[j].fours);
+                     var not_out_batsmen_Sr=(response.fullScorecard.innings[0].batsmen[j].strikeRate);
+                     var tbody= "<tr class ='odd'> <td class='col-xs-7'>"+not_out_batsmen_name+"</td> <td class='col-xs-1'>"+not_out_batsmen_runs+"</td> <td class='col-xs-1'>"+not_out_batsmen_balls+"</td><td class='col-xs-1'>"+not_out_batsmen_Sr+"</td><td class='col-xs-1'>"+not_out_batsmen_sixes+"</td><td class='col-xs-1'>"+not_out_batsmen_fours+"</td> </tr>";  
+                     $('.points_table .batsmen').append(tbody);                  
+                 }
+               }
+                  var bowlers_length=response.fullScorecard.innings[0].bowlers.length;
+                  console.log(batsmen_length);
+                  for (var j = 0; j < bowlers_length; j++) {
+                     var not_out_bowler_name=(response.fullScorecard.innings[0].bowlers[j].name);
+                     var not_out_bowler_overs=(response.fullScorecard.innings[0].bowlers[j].overs);
+                     var not_out_bowler_wickets=(response.fullScorecard.innings[0].bowlers[j].wickets);
+                     var not_out_bowler_runsConceded=(response.fullScorecard.innings[0].bowlers[j].runsConceded);
+                     var not_out_bowler_wides=(response.fullScorecard.innings[0].bowlers[j].wides);
+                      var not_out_bowler_economy=(response.fullScorecard.innings[0].bowlers[j].economy);                    
+                      var tbody1= "<tr class ='odd'> <td class='col-xs-7'>"+not_out_bowler_name+"</td> <td class='col-xs-1'>"+not_out_bowler_overs+"</td> <td class='col-xs-1'>"+not_out_bowler_runsConceded+"</td><td class='col-xs-1'>"+not_out_bowler_wickets+"</td><td class='col-xs-1'>"+not_out_bowler_wides+"</td><td class='col-xs-1'>"+not_out_bowler_economy+"</td> </tr>"; 
+                          console.log(tbody1); 
+                      $(' .bowlers').append(tbody1);       
+                  }
+               for (var i = 0; i < response.fullScorecard.innings.length; i++) {
+               var run=response.fullScorecard.innings[i].run;
+               var name=response.fullScorecard.innings[i].name;
+               var sname=response.fullScorecard.innings[i].team.shortName;
+               console.log(run +sname);
+               var sname_current=response.fullScorecard.innings[0].team.shortName;
+               var current_run=response.fullScorecard.innings[0].run;
+               var wicket=response.fullScorecard.innings[0].wicket;
+               var over=response.fullScorecard.innings[0].over;
+               var current_batting=response.fullScorecard.innings[0].team.shortName;
+               var rr=response.fullScorecard.innings[0].requiredRunRate;
+               var runRate=response.fullScorecard.innings[0].runRate;
+               $('.current_batting_team').html(sname_current + ' ' + current_run  +' - ' + wicket + ' ' + over + '(overs)' + ' ' + runRate + 'CRR' );
+                
+             }
+
+
+
+           });
+
+
+
+
+ $(".series_name").on("click", "li", function() {
+ var series_id= $(this).attr('data-id');
+ var seris_name=$(this).find("a").html();
+ alert(seris_name);
+ series_name(series_id,seris_name);
+});
+
+  $(document).on('click','.livescores  .live_score .scores_link a', function(e){
+    var match_id= $(this).attr('data-id');
+    var series_id= $(this).attr('data-value');
+    alert("hi");
+    match_details(match_id,series_id);
+  });
+    $(document).on('click','.livescores  .completed_scores .rca-menu-widget a', function(e){
+    var match_id= $(this).attr('data-id');
+    var series_id= $(this).attr('data-value');
+    alert("hi");
+    match_details(match_id,series_id);
+  });
+
+});
+
+function series_name(series_id,seris_name){
+
+  alert("hiiiwwdw");
+  var series_id=series_id;
+  var series_name=seris_name;
+  $.ajax({
+   data : { series_id : 'series_id',series_name:'series_name' },
+  context: document.body
+}).done(function(Results) {
+  window.location='series_selected.html?series_id='+series_id+'&series_name='+seris_name
+});
+
+
+}
+
+
+
+
+
+
+
+
+</script>
+  </head>
+  <body style="background-color:#f4f3f2">
+    <div class="rca-container">
+
+      <!--Logo Holder-->
+    <nav class="navbar navbar-default nav_bar" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!-- <a class="navbar-brand" href="#">Leo Scores</a> -->
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+         <li><a href="#"><span class="glyphicon glyphicon glyphicon-home"></span> Live scores</a></li>
+          <li class="dropdown">
+          <a href="Schedule.html" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"  data-close-others="false">
+          <span class="glyphicon glyphicon glyphicon-user"></span> 
+          Schedule
+          <span class="caret"></span></a>
+
+        </li>
+         <li class="dropdown Series">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"  data-close-others="false">
+          <span class="glyphicon glyphicon glyphicon-user"></span> 
+          Series
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu series_name1" role="menu">
+
+          </ul>
+        </li>
+        <li><a href="#"> <span class="glyphicon glyphicon glyphicon-pencil"></span> Testimonial</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon glyphicon-paperclip"></span> Broucher</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="false">
+          <span class="glyphicon glyphicon glyphicon-earphone"></span> 
+          Contact
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#"><span class="glyphicon glyphicon glyphicon-screenshot"></span> Sitemap</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon glyphicon-user"></span> Career</a></li>
+
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+
+      <!--Widget Outer-->
+      <div class="rca-row">
+        <div class="rca-column-12">
+          <!--Widget Inner -->
+          <div class="rca-menu-scroll rca-left-border seriesList">
+            <ul class="rca-season-list series_name">
+
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!--Widget Outer-->
+      <div class="rca-row livescores">
+
+  </div>
+
+      <div class="rca-row">
+        <div class="rca-column-12">
+          <div class="rca-blog-image">
+            <h2>Ad Blog Content</h2>
+          </div>
+        </div>
+      </div>
+      <div class="rca-row">
+
+<div class="rca-column-8 ">
+  <div class="container main_container">
+  <div class="row">
+    <h3 class="match_name ">Score Borad: </h3>
+
+
+        <div class="rca-column-5 col-sm-5  row"><label class="rca-column-2 col-sm-2">Series:</label><p class="col-sm-10 rca-column-10"><a class="series_name_scoreborad"></a></p></div>
+        <div class="rca-column-7 col-sm-7 row"><label class="rca-column-2 col-sm-2">Venue:</label><p class="col-sm-10 rca-column-10 venue"></p></div>
+        <div class="rca-column-12 col-sm-12  row"><p class="rca-column-12 col-sm-12 current_batting_team"></p>  </div>
+        <div class="rca-column-12 col-sm-12  row"> <p class="col-sm-12 rca-column-12 summar_text"> </p></div>
+  </div>
+      <div class="panel with-nav-tabs ">
+       <div class="panel-heading">
+               <ul class="nav nav-tabs">
+                   <li class="active"><a href="#tab1success" data-toggle="tab">Summary</a></li>
+                   <li><a href="#tab2success" data-toggle="tab">ScoreBoard</a></li>
+                   <li><a href="#tab3success" data-toggle="tab">Match Key Stats</a></li>
+
+               </ul>
+       </div>
+       <div class="panel-body">
+           <div class="tab-content">
+               <div class="tab-pane fade in active" id="tab1success">
+                 <table class="points_table col-md-12 col-sm-12 ">
+                   <thead>
+                     <tr>
+                       <th class="col-xs-7 col-md-7">Batsman</th>
+                       <th class="col-xs-1 col-md-1">R</th>
+                       <th class="col-xs-1 col-md-1">B</th>
+                       <th class="col-xs-1 col-md-1">SR</th>
+                       <th class="col-xs-1 col-md-1">6s</th>
+                        <th class="col-xs-1 col-md-1">4s</th>
+                     </tr>
+                   </thead>
+                        <tbody class="points_table_scrollbar batsmen">
+                        
+                       </tbody>
+                    </table>
+                    
+
+                    <table class="points_table col-md-12 col-sm-12 ">
+                   <thead>
+                     <tr>
+                       <th class="col-xs-7 col-md-7">Bowlers</th>
+                       <th class="col-xs-1 col-md-1">O</th>
+                       <th class="col-xs-1 col-md-1">Runs</th>
+                       <th class="col-xs-1 col-md-1">W</th>
+                         <th class="col-xs-1 col-md-1">wd</th>
+                       <th class="col-xs-1 col-md-1">Eco</th>
+                      
+                     </tr>
+                   </thead>
+                        <tbody class="points_table_scrollbar bowlers">
+                        
+                       </tbody>
+                    </table>
+               </div>
+               <div class="tab-pane fade" id="tab2success">Success 2</div>
+               <div class="tab-pane fade" id="tab3success">Success 3</div>
+
+           </div>
+       </div>
+   </div>
+
+  </div>
+</div>
+
+        </div>
+        <div class="rca-column-4">
+          <!--Match Series-->
+
+
+          <div class="rca-blog">
+
+           <a class="twitter-timeline" href="https://twitter.com/ICC?ref_src=twsrc%5Etfw/{screen_name} data-width="400"
+          data-height="500"">Tweets by ICC</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+          </div>
+        </div>
+      </div>
+
+      <div class="rca-row">
+        <div class="rca-column-12">
+          <div class="rca-mini-widget rca-tab-simple">
+            <ul class="rca-tab-list">
+              <li class="rca-tab-link active" data-tab="rtab-1" onclick="showTab(this);">Photos</li>
+              <li class="rca-tab-link" data-tab="rtab-2" onclick="showTab(this);">Gallery</li>
+            </ul>
+            <div id="rtab-1" class="rca-padding rca-tab-content active">
+              <div class="rca-column-4">
+                <div class="rca-blog-content">
+                  <div class="rca-blog-image">
+                    <a href="#">
+                      <img src="images/1200px-IPL_T20_Chennai_vs_Kolkata.jpg">
+                    </a>
+                    <div class="rca-blog-head">
+                      Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur.
+                    </div>
+                  </div>
+                  <div class="rca-padding">
+                    Curabitur blandit bibendum massa a vestibulum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Class aptent taciti sociosqu...
+                  </div>
+                </div>
+              </div>
+              <div class="rca-column-4">
+                <div class="rca-blog-content">
+                  <div class="rca-blog-image">
+                    <a href="#">
+                      <img src="images/1200px-Flagcricket.jpg">
+                    </a>
+                    <div class="rca-blog-head">
+                      India celebrate with the Asia Cup trophy, after easing past Bangladesh in the final in Mirpur
+                    </div>
+                  </div>
+                  <div class="rca-padding">
+                    Litora torquent per conubia nostra, per inceptos himenaeos. Aenean eleifend non augue eu euismod. Sed tempus justo eu aliquam vestibulum. Sed sit amet metus mollis.
+                  </div>
+                </div>
+              </div>
+              <div class="rca-column-4">
+                <div class="rca-blog-content">
+                  <div class="rca-blog-image">
+                    <a href="#">
+                      <img src="images/Sachin_at_the_other_end.jpg">
+                    </a>
+                    <div class="rca-blog-head">
+                      Vivamus luctus luctus efficitur. Vivamus tincidunt purus et facilisis efficitur.
+                    </div>
+                  </div>
+                  <div class="rca-padding">
+                    Donec mattis velit sed placerat dictum. Phasellus eget quam odio. Mauris non magna elit. In neque arcu, auctor in tristique at, molestie quis mauris. Nullam suscipit sed nulla.
+                  </div>
+                </div>
+              </div>
+              <div class="rca-clear"></div>
+            </div>
+            <div id="rtab-2" class="rca-padding rca-tab-content">
+              <div class="rca-clear"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="rca-row">
+        <div class="rca-column-8">
+          <ul class="rca-footer">
+            <li><a href="">About Us</a></li>
+            <li><a href="">Privacy Policy</a></li>
+            <li><a href="">Feedback</a></li>
+            <li><a href="">Site map</a></li>
+          </ul>
+        </div>
+
+        <div class="rca-column-4">
+          <ul class="rca-footer rca-right">
+            <li>© 2016 <a href="">Yoursite.com</a>, All rights reserved </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+   <script>
+      function showTab(event) {
+        var sourceParent = event.parentElement.parentElement;
+        var sourceChilds = sourceParent.getElementsByClassName("rca-tab-content");
+        var sourceLinkParent = sourceParent.getElementsByClassName("rca-tab-link");
+        for (var i=0; i < sourceChilds.length; i++) {
+          sourceChilds.item(i).classList.remove("active");
+        }
+        for (var i=0; i < sourceLinkParent.length; i++) {
+          sourceLinkParent.item(i).classList.remove("active");
+        }
+        var dataTab= event.getAttribute("data-tab");
+
+        event.classList.add("active");
+        // document.getElementById(dataTab).className = tabClass + ' active';
+        document.getElementById(dataTab).className += ' active';
+      }
+
+    </script>
+
+  </body>
+</html>

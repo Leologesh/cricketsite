@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>ScoreBoard</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" type="text/css" href="css/leo.css">
+
+    <link rel="stylesheet" href="css/lavenderTheme.css"/> 
+  <link rel="stylesheet"    href="css/bootstrap.css">
+
+<!-- jQuery library -->
+<script src="javascript/jquery.min.js"></script>
+
+
+<!-- Latest compiled JavaScript -->
+<script src="javascript/bootstrap.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    
+    var url = window.location.href;
+    var series_id=url.split('=');
+    var series_name=series_id[2];
+    var series_name1 = series_name.replace('/[^a-z0-9\s]/gi', '').replace('/[_\s]/g', '');
+    var seriesid1=series_id[1];
+    var points='';
+    var seriesid_id=seriesid1.split('&');
+    var seriesid=seriesid_id[0];
+var team_name='';
+var won='';
+var no_of_played='';
+var lost='';
+  var apiKey = "o48jTP9vaQmsh1EFfINtWHzlJms3p1ldPynjsnfWRe4RVVF3BH";
+  var settings = {
+   "async": true,
+    "crossDomain": true,
+    "dataType": "json",
+   "url": "https://dev132-cricket-live-scores-v1.p.mashape.com/matchseries.php?seriesid="+seriesid+"",
+      "method": "GET",
+    "headers": {
+       "X-Mashape-Key" : apiKey,
+        "Accept" : "application/json"
+       }
+  }   
+    $.ajax(settings).done(function (response) {
+        console.log(response);
+        var match_length=response.matchList.matches.length;
+        // console.log(match_length);
+         var match_venue='',
+          match_type='',
+          local_date='',
+          match_status='',
+          match_summary='',
+          match_id='',
+           home_team='',
+          awayTeam='';
+          for (var i = 0; i < match_length; i++) {
+          var series_name=response.matchList.matches[0].series.shortName;
+          var series_img=response.matchList.matches[0].series.shieldImageUrl;
+        
+          $('.series_name').html(series_name);
+          $('.series_img').attr("src",series_img);
+          match_summary=response.matchList.matches[i].matchSummaryText;  
+                match_status= response.matchList.matches[i].status;
+              if(match_status=='UPCOMING'){
+                 match_venue=response.matchList.matches[i].venue.name;
+                 if(response.matchList.matches[i].awayTeam.name=='To Be Decided'){
+                   awayTeam=response.matchList.matches[i].awayTeam.name 
+                 }
+                 else{
+                 awayTeam=response.matchList.matches[i].awayTeam.name + ' '+ 'vs' +' ' + response.matchList.matches[i].homeTeam.name;
+               }
+                   match_type=response.matchList.matches[i].cmsMatchType;
+                 local_date=response.matchList.matches[i].localStartDate + ' ' + response.matchList.matches[i].localStartTime;
+                 match_id=response.matchList.matches[i].id;
+                
+            
+                 var series_content="<div class='rca-post'><h4><a data-id="+match_id+">Teams:"+awayTeam+"</a></h4><p>Match Venue:"+match_venue+" </p> <p class='rca-post-info'>Local time :"+local_date+" </p></div>";
+
+                $('.series_details').append(series_content);
+
+              }
+              else{
+                 match_venue=response.matchList.matches[i].venue.name;
+                 awayTeam=response.matchList.matches[i].awayTeam.name + ' '+ 'vs' +' ' + response.matchList.matches[i].homeTeam.name;
+                  match_type=response.matchList.matches[i].cmsMatchType;
+                 local_date=response.matchList.matches[i].localStartDate + ' ' + response.matchList.matches[i].localStartTime;
+                 match_id=response.matchList.matches[i].id;
+                 match_status=response.matchList.matches[i].matchSummaryText;
+                    var series_content="<div class='rca-post'><h4><a data-id="+match_id+">Teams:"+awayTeam+"</a></h4><p>Match Venue:"+match_venue+" </p><p>MatchSummary:"+match_status+"</p> <p class='rca-post-info'>Local time :"+local_date+" </p></div>";
+
+                $('.series_details').append(series_content);
+
+
+              }
+        }
+    });
+      var check = {
+   "async": true,
+    "crossDomain": true,
+    "dataType": "json",
+   "url": "https://dev132-cricket-live-scores-v1.p.mashape.com/seriesstandings.php?seriesid="+seriesid+"",
+      "method": "GET",
+    "headers": {
+       "X-Mashape-Key" : apiKey,
+        "Accept" : "application/json"
+       }
+  }
+    $.ajax(check).done(function (check_response) {
+
+         // console.log(check_response);
+        var points_table_length=check_response.teams.length;
+        
+        console.log(points_table_length);
+        if (check_response.teams.length==0) {
+          // console.log("hi no points table");
+
+        }
+        else{
+        for (var i = 0; i < points_table_length; i++) {
+            console.log("points_table");
+             team_name=check_response.teams[i].name;
+             no_of_played=check_response.teams[i].played;
+             won=check_response.teams[i].won;
+             points=check_response.teams[i].points;
+             lost=check_response.teams[i].lost
+              var table_conetent="<tr class='active'><td>"+team_name+"</td><td>"+no_of_played+"</td><td>"+won+"</td><td>"+lost+"</td><td>"+points+"</td></tr>";
+              $('.table tbody').append(table_conetent);
+        }
+      }
+          
+  });
+  });
+
+</script>
+  </head>
+  
+
+   <body style="background-color:#f4f3f2">
+    <div class="rca-container">
+
+      <!--Logo Holder-->
+<nav class="navbar navbar-default nav_bar" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+     <!--  <a class="navbar-brand" href="#">Leo Scores</a> -->
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+         <li><a href="#"><span class="glyphicon glyphicon glyphicon-home"></span> Live scores</a></li>
+          <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"  data-close-others="false">
+          <span class="glyphicon glyphicon glyphicon-user"></span> 
+          Schedule
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#"><span class="glyphicon glyphicon glyphicon-chevron-right"></span>International </a></li>
+            <li><a href="#"><span class="glyphicon glyphicon glyphicon-chevron-right"></span>Domestics</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon glyphicon-chevron-right"></span> Portfolio</a></li>
+          </ul>
+        </li>
+         <li class="dropdown Series">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"  data-close-others="false">
+          <span class="glyphicon glyphicon glyphicon-user"></span> 
+          Series
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu series_name1" role="menu">
+            
+          </ul>
+        </li>
+        <li><a href="#"> <span class="glyphicon glyphicon glyphicon-pencil"></span> Testimonial</a></li>
+      </ul>
+     
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon glyphicon-paperclip"></span> Broucher</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="false">
+          <span class="glyphicon glyphicon glyphicon-earphone"></span> 
+          Contact 
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#"><span class="glyphicon glyphicon glyphicon-screenshot"></span> Sitemap</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon glyphicon-user"></span> Career</a></li>
+            
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+  <div class="rca-row">
+    <div class="rca-column-8">
+
+      <div class="rca-medium-widget rca-padding rca-live-season rca-top-border series_details">
+        
+        <h3 class="series_name"></h3>
+        <div class='rca-blog-image'>  
+        <img src="" class="series_img">
+        </div>  
+    
+    </div>
+</div>
+     <div class="rca-column-4">
+   
+      <div class="rca-news-widget check_score rca-padding series_points">
+          
+             <h3>Points Table</h3>
+                         <table class="table">
+                          <thead><tr><th>Teams Name</th>
+                            <th>p</th>
+                            <th>w</th>
+                            <th>l</th>
+                            <th>Points</th>
+
+                          </tr></thead>
+                          <tbody></tbody>
+
+            </table>
+
+      </div>
+     </div> 
+
+
+  </div>  
+  
+
+      
+     <div class="rca-row">
+        <div class="rca-column-8">
+          <ul class="rca-footer">
+            <li><a href="">About Us</a></li>
+            <li><a href="">Privacy Policy</a></li>
+            <li><a href="">Feedback</a></li>
+            <li><a href="">Site map</a></li>
+          </ul>
+        </div>
+        <div class="rca-column-4">
+          <ul class="rca-footer rca-right">
+            <li>© 2016 <a href="">Yoursite.com</a>, All rights reserved </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+   <script>
+      function showTab(event) {
+        var sourceParent = event.parentElement.parentElement;
+        var sourceChilds = sourceParent.getElementsByClassName("rca-tab-content");
+        var sourceLinkParent = sourceParent.getElementsByClassName("rca-tab-link");
+        for (var i=0; i < sourceChilds.length; i++) {
+          sourceChilds.item(i).classList.remove("active");
+        }
+        for (var i=0; i < sourceLinkParent.length; i++) {
+          sourceLinkParent.item(i).classList.remove("active");
+        }
+        var dataTab= event.getAttribute("data-tab");
+
+        event.classList.add("active");
+        // document.getElementById(dataTab).className = tabClass + ' active';
+        document.getElementById(dataTab).className += ' active';
+      }
+
+    </script>
+
+  </body>
+</html> 

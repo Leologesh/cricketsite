@@ -1,0 +1,39 @@
+
+<html>
+<head>
+	<title></title>
+</head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+var content='';
+$.get("https://cricapi.com/api/cricketScore?apikey=ScO99h2QfESpu43dT3vY9WBbgM42&unique_id=41982", function(matchdata) {
+	console.log(matchdata);
+	//  for (var i =0; i<matchdata.data.length ;i++) {
+	//   console.log(matchdata.data[i].unique_id);
+	//   content="<button type='button' class='leo'> "+matchdata.data[i].unique_id+"</button>";
+	//   $('.check').append(content);
+	//  }
+	// // matchdata.data.forEach(function(md) {
+	// 	console.log(md.description + " - to grab more details, simply use the unique_id " + md.unique_id + " with the cricketScore api!");
+	// 	console.log(md.unique_id);
+	//    var cont=$('.check').append();
+
+// $('.leo').click(function(e){
+// 	e.preventDefault();
+// alert("HI");
+// });	// });
+});
+});
+</script>
+<body>
+
+<div class="check"></div>
+</body>
+<script type="text/javascript">
+$(document).ready(function() {
+
+});
+</script>
+</html>

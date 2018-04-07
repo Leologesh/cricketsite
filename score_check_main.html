@@ -1,0 +1,274 @@
+    <script src="javascript/jquery.min.js"></script>
+
+    <script type="text/javascript">
+
+    $(document).ready(function() {
+
+    var apiKey = "o48jTP9vaQmsh1EFfINtWHzlJms3p1ldPynjsnfWRe4RVVF3BH";
+
+    var settings = {
+    "async": true,
+    "crossDomain": true,
+    "dataType": "json",
+    "url": "https://dev132-cricket-live-scores-v1.p.mashape.com/match.php?matchid=41088&seriesid=1964",
+      "method": "GET",
+    "headers": {
+       "X-Mashape-Key" : apiKey,
+        "Accept" : "application/json"
+       }
+    }
+    $.ajax(settings).done(function (response) {
+                  console.log(response);
+                   var match_name= response.match.name;
+                   var series_name=response .match.series.name;
+                   var match_type =response .match.cmsMatchType;
+                   var cmsMatchStartDate =response .match.cmsMatchStartDate;
+                   var venue =response .match.venue.name;
+
+                   $('.rca-live-label,.match ').html(match_name);
+                   $('.series_name ').html(series_name);
+                   $('.match_type ').html(match_type);
+                   $('.venue ').html(venue);
+                   $('.cmsMatchStartDate ').html(cmsMatchStartDate);
+
+         });
+
+       var apiKey = "o48jTP9vaQmsh1EFfINtWHzlJms3p1ldPynjsnfWRe4RVVF3BH";
+
+    var settings = {
+    "async": true,
+    "crossDomain": true,
+    "dataType": "json",
+    "url": "https://dev132-cricket-live-scores-v1.p.mashape.com/scorecards.php?seriesid=1964&matchid=41088",
+
+      "method": "GET",
+    "headers": {
+       "X-Mashape-Key" : apiKey,
+        "Accept" : "application/json"
+       }
+    }
+    $.ajax(settings).done(function (response) {
+                  console.log(response);
+                  var innings_length=response.fullScorecard.innings.length;
+                  var batsmen_length=response.fullScorecard.innings[0].batsmen.length;
+                    console.log(batsmen_length);
+                    for (var j = 0; j < batsmen_length; j++) {
+                      if(response.fullScorecard.innings[0].batsmen[j].howOut=="not out"){
+                       var not_out_batsmen_name=(response.fullScorecard.innings[0].batsmen[j].name);
+                       var not_out_batsmen_runs=(response.fullScorecard.innings[0].batsmen[j].runs);
+                       var not_out_batsmen_balls=(response.fullScorecard.innings[0].batsmen[j].balls);
+                       console.log(not_out_batsmen_name + not_out_batsmen_runs);
+                   }
+                 }
+                 var run=response.fullScorecard.innings[0].run;
+
+                 console.log(run);
+                 var wicket=response.fullScorecard.innings[0].wicket;
+                 var over=response.fullScorecard.innings[0].over;
+                 var current_batting=response.fullScorecard.innings[0].team.shortName;
+                 var rr=response.fullScorecard.innings[0].requiredRunRate;
+
+
+
+
+
+
+
+             });
+
+    });
+    </script>
+
+    <body> <table class="points_table">
+      <thead>
+        <tr>
+          <th class="col-xs-1">#</th>
+          <th class="col-xs-7">Team</th>
+          <th class="col-xs-1">S</th>
+          <th class="col-xs-1">M</th>
+          <th class="col-xs-1">L</th>
+          <th class="col-xs-1">O</th>
+        </tr>
+      </thead>
+           <tbody class="points_table_scrollbar">
+            <tr class="odd">
+              <td class="col-xs-1">1</td>
+              <td class="col-xs-7">Test Points</td>
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-1">0</td>
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-1">1</td>
+            </tr>
+
+            <tr class="even">
+              <td class="col-xs-1">2</td>
+              <td class="col-xs-7">Test Points 2</td>
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-1">0</td>
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-1">1</td>
+            </tr>
+
+            <tr class="odd">
+              <td class="col-xs-1">3</td>
+              <td class="col-xs-7">Test Points 3</td>
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-1">0</td>
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-1">1</td>
+            </tr>
+
+            <tr class="even">
+              <td class="col-xs-1">4</td>
+              <td class="col-xs-7">Test Points 4</td>
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-1">0</td>
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-1">1</td>
+            </tr>
+
+            <tr class="odd">
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-7">Test Points 5</td>
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-1">0</td>
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-1">1</td>
+            </tr>
+
+            <tr class="even">
+              <td class="col-xs-1">6</td>
+              <td class="col-xs-7">Test Points 6</td>
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-1">0</td>
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-1">1</td>
+            </tr>
+
+            <tr class="odd">
+              <td class="col-xs-1">7</td>
+              <td class="col-xs-7">Test Points 7</td>
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-1">0</td>
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-1">1</td>
+            </tr>
+
+            <tr class="even">
+              <td class="col-xs-1">8</td>
+              <td class="col-xs-7">Test Points 8</td>
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-1">0</td>
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-1">1</td>
+            </tr>
+
+            <tr class="odd">
+              <td class="col-xs-1">9</td>
+              <td class="col-xs-7">Test Points 9</td>
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-1">0</td>
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-1">1</td>
+            </tr>
+
+            <tr class="even">
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-7">Test Points 10</td>
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-1">0</td>
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-1">1</td>
+            </tr>
+
+            <tr class="odd">
+              <td class="col-xs-1">11</td>
+              <td class="col-xs-7">Test Points 11</td>
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-1">0</td>
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-1">1</td>
+            </tr>
+
+            <tr class="even">
+              <td class="col-xs-1">12</td>
+              <td class="col-xs-7">Test Points 12</td>
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-1">0</td>
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-1">1</td>
+            </tr>
+
+            <tr class="odd">
+              <td class="col-xs-1">13</td>
+              <td class="col-xs-7">Test Points 13</td>
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-1">0</td>
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-1">1</td>
+            </tr>
+
+            <tr class="even">
+              <td class="col-xs-1">14</td>
+              <td class="col-xs-7">Test Points 14</td>
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-1">0</td>
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-1">1</td>
+            </tr>
+
+            <tr class="odd">
+              <td class="col-xs-1">15</td>
+              <td class="col-xs-7">Test Points 15</td>
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-1">0</td>
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-1">1</td>
+            </tr>
+
+            <tr class="even">
+              <td class="col-xs-1">16</td>
+              <td class="col-xs-7">Test Points 16</td>
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-1">0</td>
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-1">1</td>
+            </tr>
+
+            <tr class="odd">
+              <td class="col-xs-1">17</td>
+              <td class="col-xs-7">Test Points 17</td>
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-1">0</td>
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-1">1</td>
+            </tr>
+
+            <tr class="even">
+              <td class="col-xs-1">18</td>
+              <td class="col-xs-7">Test Points 18</td>
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-1">0</td>
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-1">1</td>
+            </tr>
+
+            <tr class="odd">
+              <td class="col-xs-1">19</td>
+              <td class="col-xs-7">Test Points 19</td>
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-1">0</td>
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-1">1</td>
+            </tr>
+
+            <tr class="even">
+              <td class="col-xs-1">20</td>
+              <td class="col-xs-7">Test Points 20</td>
+              <td class="col-xs-1">10</td>
+              <td class="col-xs-1">0</td>
+              <td class="col-xs-1">5</td>
+              <td class="col-xs-1">1</td>
+            </tr>
+          </tbody>
+        </table></body>

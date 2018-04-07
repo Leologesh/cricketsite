@@ -1,0 +1,11 @@
+<?php
+require_once 'unirest_php_master/src/Unirest.php';
+$response = Unirest\Request::get("https://price-api.datayuge.com/api/v1/compare/search?product=samsung%20galaxy%20s8&api_key= yrJFV6uU60LuYwnKB1x7BDQu9vGfXxcKfgN"
+	array(
+    
+    "Accept" => "application/json"
+  )
+);
+  print_r($response);
+ 
+?>
